@@ -1,0 +1,106 @@
+// custom header in wordpress
+
+//Custom headers are a great way to personalize your WordPress theme and make your website visually appealing. They allow you to display an image, video, or other media at the top of your site, often paired with text like a title or tagline.
+
+//Step 1: Enable Custom Header Support in Your Theme
+
+//To add a custom header feature, include the following code in your theme’s functions.php file:
+
+function theme_custom_header_setup() {
+    $args = array(
+        'width'         => 1920, // Set width
+        'height'        => 400,  // Set height
+        'flex-width'    => true, // Allow flexible width
+        'flex-height'   => true, // Allow flexible height
+        'header-text'   => false, // Hide header text by default
+        'default-image' => get_template_directory_uri() . '/images/default-header.jpg', // Set a default header image
+    );
+    add_theme_support('custom-header', $args);
+}
+add_action('after_setup_theme', 'theme_custom_header_setup');
+==================================================================
+//Step 2: Add a Header Image Upload Option
+
+//After enabling the custom header, your users can upload images from Appearance > Customize > Header Image.
+
+//Step 3: Display the Header in Your Theme
+
+//To display the custom header in your theme, add the following code in the template file where you want the header to appear (e.g., header.php):
+
+<?php if (get_header_image()) : ?>
+<div class="custom-header">
+<img src="<?php echo esc_url(get_header_image()); ?>" 
+width="<?php echo esc_attr(get_custom_header()->width); ?>" 
+height="<?php echo esc_attr(get_custom_header()->height); ?>" 
+alt="Header Image">
+</div>
+<?php endif; ?>
+=================================================================
+//Step 4: Add Styling for the Header
+
+//Customize the appearance of your header using CSS. Add the following to your style.css file:
+
+.custom-header {
+    position: relative;
+    text-align: center;
+    color: white; /* Default color for the text */
+}
+.custom-header img {
+    width: 100%;
+    height: auto;
+}
+=================================================================
+//Step 5: Overlay Text on the Header
+//To display a title or any text over the header, update the code in your template file like this:
+
+<?php if (get_header_image()) : ?>
+<div class="custom-header" style="position: relative; text-align: center; color: white;">
+<img src="<?php echo esc_url(get_header_image()); ?>" 
+alt="Header Image" 
+style="width: 100%; height: auto;">
+<h1 class="custom-header-title" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0; z-index: 1;">
+<?php echo esc_html(get_bloginfo('name')); // Site title ?>
+</h1>
+</div>
+<?php endif; ?>
+=================================================================
+//Step 6: Add a Default Header Image
+
+//Place a default header image in your theme’s images folder. For example:
+
+//Path: /wp-content/themes/your-theme/images/default-header.jpg
+
+//Step 7: Use the Custom Header in Multiple Templates
+
+//If you want the custom header to appear in multiple templates, include the get_header_image() code in relevant files like index.php, page.php, or single.php.
+
+//Step 8: Test the Custom Header
+//Go to Appearance > Customize > Header Image.
+//Upload a header image.
+//Check your website to ensure the custom header displays correctly.
+//Advanced Tips
+//1. Custom Header for Specific Pages
+=================================================================
+//Use conditional tags to display different headers for specific pages:
+
+<?php if (is_front_page()) : ?>
+<img src="path/to/front-page-header.jpg" alt="Front Page Header">
+<?php else : ?>
+<img src="<?php echo esc_url(get_header_image()); ?>" alt="Header Image">
+<?php endif; ?>
+=================================================================
+//2. Video Headers
+
+//WordPress supports video headers. Enable this by adding video to the add_theme_support function:
+
+add_theme_support('custom-header', array(
+   'video' => true,
+));
+=================================================================
+//3. Header Text Customization
+//If you enable header-text, allow users to toggle and style the text:
+<?php if (display_header_text()) : ?>
+<h1 style="color: <?php echo esc_attr(get_header_textcolor()); ?>;">
+<?php bloginfo('name'); ?>
+</h1>
+<?php endif; ?>
