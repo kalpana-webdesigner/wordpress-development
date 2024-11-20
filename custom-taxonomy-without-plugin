@@ -1,4 +1,5 @@
 
+//Create custom-taxonomy-without-plugin in wordpress 
 
    // step : 1)  Open your functions.php file.
    // step : 2) Add the following code to create a custom taxonomy:
