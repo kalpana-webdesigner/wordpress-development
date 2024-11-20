@@ -1,4 +1,4 @@
-// Html menu convert into dynamic menu in wordpress 
+// Convert HTML Menu to WordPress Menu
 // Sample HTML Menu : 
 <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
